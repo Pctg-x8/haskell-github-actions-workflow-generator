@@ -1,0 +1,53 @@
+name: haskell-github-actions-workflow-generator
+version: 0.1.0.0
+github: "Pctg-x8/haskell-github-actions-workflow-generator"
+license: MIT
+author: "S.Percentage"
+maintainer: "Syn.Tri.Naga@gmail.com"
+copyright: "2023 S.Percentage"
+
+extra-source-files:
+  - README.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description: Typedefs and Utilities for GitHub Actions workflow generator
+
+dependencies:
+  - base >= 4.7 && < 5
+  - aeson
+  - aeson-yaml
+  - bytestring
+  - containers
+  - extensible-effects
+  - filepath
+  - composition
+
+ghc-options:
+  - -Wall
+  - -Wcompat
+  - -Widentities
+  - -Wincomplete-record-updates
+  - -Wincomplete-uni-patterns
+  - -Wmissing-export-lists
+  - -Wmissing-home-modules
+  - -Wpartial-fields
+  - -Wredundant-constraints
+
+default-extensions:
+  - ImportQualifiedPost
+  - TupleSections
+  - FlexibleInstances
+  - FlexibleContexts
+  - MonoLocalBinds
+  - RecordWildCards
+  - OverloadedStrings
+  - BlockArguments
+
+library:
+  source-dirs: src
