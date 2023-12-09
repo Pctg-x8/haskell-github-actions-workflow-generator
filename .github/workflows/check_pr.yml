@@ -5,8 +5,10 @@ jobs:
     steps:
       - name: Checking out
         uses: "actions/checkout@v3"
-      - name: Check editorconfig
-        uses: "zbeekman/EditorConfig-Action@v1.1.1"
+      - name: Setup editorconfig-checker
+        uses: "editorconfig-checker/action-editorconfig-checker@v2"
+      - name: Run editorconfig-checker
+        run: editorconfig-checker
       - name: Setup hlint
         uses: "haskell-actions/hlint-setup@v2"
       - name: Run hlint

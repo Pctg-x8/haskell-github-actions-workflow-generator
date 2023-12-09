@@ -9,17 +9,18 @@ import System.Environment (getArgs)
 import System.FilePath ((</>))
 import Workflow.GitHub.Actions qualified as GHA
 import Workflow.GitHub.Actions.Predefined.Checkout qualified as Checkout
-import Workflow.GitHub.Actions.Predefined.EditorConfig qualified as EditorConfig
+import Workflow.GitHub.Actions.Predefined.SetupEditorConfigChecker qualified as SetupEditorConfigChecker
 import Workflow.GitHub.Actions.Predefined.Haskell.RunHlint qualified as RunHlint
 import Workflow.GitHub.Actions.Predefined.Haskell.Setup qualified as SetupHaskell
 import Workflow.GitHub.Actions.Predefined.Haskell.SetupHlint qualified as SetupHlint
 
-job :: Bool -> GHA.Job
-job checkForAllFiles =
+job :: GHA.Job
+job =
   GHA.namedAs "Lint and Test" $
     GHA.job
       [ GHA.namedAs "Checking out" $ Checkout.step Nothing,
-        GHA.namedAs "Check editorconfig" EditorConfig.step & if checkForAllFiles then EditorConfig.alwaysLintAllFiles else id,
+        GHA.namedAs "Setup editorconfig-checker" SetupEditorConfigChecker.step,
+        GHA.namedAs "Run editorconfig-checker" $ GHA.runStep "editorconfig-checker",
         GHA.namedAs "Setup hlint" SetupHlint.step,
         GHA.namedAs "Run hlint" $ RunHlint.step "./src" & RunHlint.failOn RunHlint.Warning,
         GHA.namedAs "Setup Haskell" $ SetupHaskell.step & SetupHaskell.enableStack & SetupHaskell.stackSetupGHC,
@@ -28,13 +29,13 @@ job checkForAllFiles =
 
 masterWorkflow :: GHA.Workflow
 masterWorkflow =
-  GHA.buildWorkflow [GHA.workflowJob "check" $ job True] $
+  GHA.buildWorkflow [GHA.workflowJob "check" job] $
     GHA.onPush $
       GHA.workflowPushTrigger & GHA.filterBranch "master"
 
 prWorkflow :: GHA.Workflow
 prWorkflow =
-  GHA.buildWorkflow [GHA.workflowJob "check" $ job False] $
+  GHA.buildWorkflow [GHA.workflowJob "check" job] $
     GHA.onPullRequest $
       GHA.workflowPullRequestTrigger & GHA.filterType "opened" & GHA.filterType "synchronized"
 
