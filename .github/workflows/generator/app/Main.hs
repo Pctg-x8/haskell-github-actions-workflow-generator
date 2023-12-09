@@ -9,10 +9,10 @@ import System.Environment (getArgs)
 import System.FilePath ((</>))
 import Workflow.GitHub.Actions qualified as GHA
 import Workflow.GitHub.Actions.Predefined.Checkout qualified as Checkout
-import Workflow.GitHub.Actions.Predefined.SetupEditorConfigChecker qualified as SetupEditorConfigChecker
 import Workflow.GitHub.Actions.Predefined.Haskell.RunHlint qualified as RunHlint
 import Workflow.GitHub.Actions.Predefined.Haskell.Setup qualified as SetupHaskell
 import Workflow.GitHub.Actions.Predefined.Haskell.SetupHlint qualified as SetupHlint
+import Workflow.GitHub.Actions.Predefined.SetupEditorConfigChecker qualified as SetupEditorConfigChecker
 
 job :: GHA.Job
 job =
@@ -20,7 +20,7 @@ job =
     GHA.job
       [ GHA.namedAs "Checking out" $ Checkout.step Nothing,
         GHA.namedAs "Setup editorconfig-checker" SetupEditorConfigChecker.step,
-        GHA.namedAs "Run editorconfig-checker" $ GHA.runStep "editorconfig-checker",
+        GHA.namedAs "Run editorconfig-checker" $ GHA.runStep "editorconfig-checker -exclude '\\.cabal$'",
         GHA.namedAs "Setup hlint" SetupHlint.step,
         GHA.namedAs "Run hlint" $ RunHlint.step "./src" & RunHlint.failOn RunHlint.Warning,
         GHA.namedAs "Setup Haskell" $ SetupHaskell.step & SetupHaskell.enableStack & SetupHaskell.stackSetupGHC,
