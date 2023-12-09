@@ -4,13 +4,14 @@ module Workflow.GitHub.Actions.Predefined.Haskell.RunHlint (step, stepMultiplePa
 
 import Workflow.GitHub.Actions qualified as GHA
 import qualified Data.Map as M
-import Data.Aeson (ToJSON(toJSON))
+import Data.Aeson (ToJSON(toJSON), encode)
+import Data.ByteString.Lazy.UTF8 (toString)
 
 step :: String -> GHA.Step
 step = GHA.actionStep "haskell-actions/hlint-run@v2" . M.singleton "path" . toJSON
 
 stepMultiplePaths :: [String] -> GHA.Step
-stepMultiplePaths = GHA.actionStep "haskell-actions/hlint-run@v2" . M.singleton "path" . toJSON
+stepMultiplePaths = GHA.actionStep "haskell-actions/hlint-run@v2" . M.singleton "path" . toJSON . toString . encode
 
 data FailOn = Never | Status | Warning | Suggestion | Error
 instance ToJSON FailOn where

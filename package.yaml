@@ -25,6 +25,7 @@ dependencies:
   - bytestring
   - containers
   - composition
+  - utf8-string
 
 ghc-options:
   - -Wall
