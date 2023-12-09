@@ -1,4 +1,4 @@
-module Workflow.GitHub.Actions (module Exported) where
+module Workflow.GitHub.Actions (module Exported, build) where
 
 import Workflow.GitHub.Actions.CommonTraits as Exported
 import Workflow.GitHub.Actions.Concurrency as Exported
@@ -10,3 +10,10 @@ import Workflow.GitHub.Actions.Step as Exported
 import Workflow.GitHub.Actions.Strategy as Exported
 import Workflow.GitHub.Actions.Workflow as Exported
 import Workflow.GitHub.Actions.WorkflowTriggers as Exported
+import Workflow.GitHub.Actions.Workflow (Workflow)
+import Data.ByteString.Lazy (ByteString)
+import Data.Aeson.Yaml (encode)
+
+-- | build a workflow to single yaml file content
+build :: Workflow -> ByteString
+build = encode

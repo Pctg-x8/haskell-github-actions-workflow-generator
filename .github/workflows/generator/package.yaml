@@ -51,7 +51,6 @@ executables:
     dependencies:
       - generator
       - haskell-github-actions-workflow-generator
-      - aeson-yaml
       - bytestring
       - filepath
 

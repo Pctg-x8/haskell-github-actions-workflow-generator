@@ -24,8 +24,6 @@ dependencies:
   - aeson-yaml
   - bytestring
   - containers
-  - extensible-effects
-  - filepath
   - composition
 
 ghc-options:

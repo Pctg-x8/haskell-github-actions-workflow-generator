@@ -69,6 +69,4 @@ library
     , bytestring
     , composition
     , containers
-    , extensible-effects
-    , filepath
   default-language: Haskell2010

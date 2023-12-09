@@ -1,7 +1,6 @@
 module Main (main) where
 
 import Control.Monad (forM_)
-import Data.Aeson.Yaml (encode)
 import Data.Bifunctor (Bifunctor (bimap))
 import Data.ByteString.Lazy.Char8 qualified as LBS8
 import Data.Function ((&))
@@ -45,4 +44,4 @@ targets = [("check_master.yml", masterWorkflow), ("check_pr.yml", prWorkflow)]
 main :: IO ()
 main = do
   baseDir <- head <$> getArgs
-  forM_ targets $ uncurry LBS8.writeFile . bimap (baseDir </>) encode
+  forM_ targets $ uncurry LBS8.writeFile . bimap (baseDir </>) GHA.build
