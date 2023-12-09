@@ -1,0 +1,29 @@
+jobs:
+  check:
+    name: Lint and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out
+        uses: "actions/checkout@v3"
+      - env:
+          ALWAYS_LINT_ALL_FILES: 'true'
+        name: Check editorconfig
+        uses: "zbeekman/EditorConfig-Action@v1.1.1"
+      - name: Setup hlint
+        uses: "haskell-actions/hlint-setup@v2"
+      - name: Run hlint
+        uses: "haskell-actions/hlint-run@v2"
+        with:
+          fail-on: warning
+          path: "./src"
+      - name: Setup Haskell
+        uses: "haskell-actions/setup@v2"
+        with:
+          enable-stack: true
+          stack-setup-ghc: true
+      - name: Run Test
+        run: stack test
+on:
+  push:
+    branches:
+      - master
