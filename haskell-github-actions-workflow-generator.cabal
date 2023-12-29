@@ -43,6 +43,7 @@ library
       Workflow.GitHub.Actions.Predefined.Rust.Toolchain
       Workflow.GitHub.Actions.Predefined.SetupEditorConfigChecker
       Workflow.GitHub.Actions.Predefined.SetupJava
+      Workflow.GitHub.Actions.Predefined.SetupPNPM
       Workflow.GitHub.Actions.Predefined.UploadArtifact
       Workflow.GitHub.Actions.Step
       Workflow.GitHub.Actions.Strategy
