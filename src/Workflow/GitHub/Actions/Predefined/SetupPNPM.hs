@@ -1,4 +1,11 @@
-module Workflow.GitHub.Actions.Predefined.SetupPNPM (RunInstallOption (..), runInstallOption, step) where
+module Workflow.GitHub.Actions.Predefined.SetupPNPM
+  ( RunInstallOption (..),
+    runInstallOption,
+    runInstallWithArgs,
+    runInstallGlobal,
+    step,
+  )
+where
 
 import Data.Aeson (ToJSON (toJSON), object, (.=))
 import Data.Aeson.Yaml (encode)
@@ -24,8 +31,17 @@ instance ToJSON RunInstallOption where
           ("recursive" .=) <$> if runInstallRecursive then Just runInstallRecursive else Nothing
         ]
 
+instance GHA.DirectoryWorker RunInstallOption where
+  workAt cwd opt = opt {runInstallCwd = Just cwd}
+
 runInstallOption :: RunInstallOption
 runInstallOption = RunInstallOption {runInstallArgs = [], runInstallCwd = Nothing, runInstallRecursive = False}
+
+runInstallWithArgs :: [String] -> RunInstallOption
+runInstallWithArgs args = runInstallOption {runInstallArgs = args}
+
+runInstallGlobal :: RunInstallOption -> RunInstallOption
+runInstallGlobal opts = opts {runInstallArgs = "--global" : runInstallArgs opts}
 
 step :: [RunInstallOption] -> GHA.Step
 step installOptions = GHA.actionStep "pnpm/action-setup@v2" args
