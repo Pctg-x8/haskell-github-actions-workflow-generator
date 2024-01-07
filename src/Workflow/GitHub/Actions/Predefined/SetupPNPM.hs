@@ -4,6 +4,7 @@ module Workflow.GitHub.Actions.Predefined.SetupPNPM
     runInstallWithArgs,
     runInstallGlobal,
     step,
+    version,
   )
 where
 
@@ -48,3 +49,6 @@ step installOptions = GHA.actionStep "pnpm/action-setup@v2" args
   where
     args = maybe mempty (M.singleton "run_install" . toJSON) serializedInstallOptions
     serializedInstallOptions = if L.null installOptions then Nothing else Just $ toString $ encode installOptions
+
+version :: String -> GHA.StepModifier
+version = GHA.stepSetWithParam "version"
