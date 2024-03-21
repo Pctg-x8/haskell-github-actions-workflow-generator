@@ -6,7 +6,7 @@ import Workflow.GitHub.Actions qualified as GHA
 
 viaWorkloadIdentityStep :: String -> String -> GHA.Step
 viaWorkloadIdentityStep providerID serviceAccountName =
-  GHA.actionStep "google-github-actions/auth@v1" $
+  GHA.actionStep "google-github-actions/auth@v2" $
     M.fromList
       [ ("workload_identity_provider", toJSON providerID),
         ("service_account", toJSON serviceAccountName)
