@@ -6,7 +6,7 @@ import Workflow.GitHub.Actions qualified as GHA
 
 -- | specify distribution, java-version is optional if java-version-file is provided
 step :: String -> GHA.Step
-step = GHA.actionStep "actions/setup-java@v3" . M.singleton "distribution" . toJSON
+step = GHA.actionStep "actions/setup-java@v4" . M.singleton "distribution" . toJSON
 
 javaVersion :: String -> GHA.StepModifier
 javaVersion = GHA.stepSetWithParam "java-version"
