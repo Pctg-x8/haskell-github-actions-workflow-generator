@@ -1,4 +1,4 @@
-module Workflow.GitHub.Actions.Predefined.SetupJava (step, javaVersion) where
+module Workflow.GitHub.Actions.Predefined.SetupJava (step, javaVersion, cache) where
 
 import Data.Aeson (ToJSON (toJSON))
 import Data.Map qualified as M
@@ -10,3 +10,6 @@ step = GHA.actionStep "actions/setup-java@v3" . M.singleton "distribution" . toJ
 
 javaVersion :: String -> GHA.StepModifier
 javaVersion = GHA.stepSetWithParam "java-version"
+
+cache :: String -> GHA.StepModifier
+cache = GHA.stepSetWithParam "cache"
